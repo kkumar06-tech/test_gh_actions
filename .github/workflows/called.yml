@@ -34,7 +34,18 @@ jobs:
         run: |
           echo "Changing the file for account: ${{ inputs.account_id }}"
           touch "$GITHUB_WORKSPACE/aws-nuke/file_for_account_${{ inputs.account_id }}.txt"
-          ls -la "$GITHUB_WORKSPACE"
+          cd aws-nuke
+          ls -la 
+
+      - name: Wait for approval
+        uses: trstringer/manual-approval@v1
+        timeout-minutes: 60
+        with:
+          secret: ${{ github.token }}
+          approvers: ${{ github.triggering_actor }}
+          minimum-approvals: 1
+          issue-title: "Approve adding file for account ${{ inputs.account_id }}"
+          issue-body: "Comment 'approve' to create the PR, or 'deny' to stop."
 
       - name: open pull request
         uses: peter-evans/create-pull-request@v8
