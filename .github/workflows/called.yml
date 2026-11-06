@@ -23,6 +23,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+           persist-credentials: false
 
       - name: display the files
         run: |
@@ -35,12 +37,11 @@ jobs:
           ls -la "$GITHUB_WORKSPACE"
 
       - name: open pull request
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v8
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Add test file for account ${{ inputs.account_id }}"
           branch: "test-file-${{ inputs.account_id }}"
           title: "Add test file for account ${{ inputs.account_id }}"
           body: | 
               This PR adds a test file for account ${{ inputs.account_id }}
-              and was triggered by Workflow triggered by @${{ github.triggering_actor }}"
+              and was triggered by Workflow triggered by @${{ github.triggering_actor }}
