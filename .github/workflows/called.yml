@@ -22,3 +22,9 @@ jobs:
       - name: display the files
         run: |
           ls -la
+      # ...existing code...
+      - name: Create a test file
+        run: |
+          echo "Changing the file for account: ${{ inputs.account_id }}"
+          touch "$GITHUB_WORKSPACE/file_for_account_${{ inputs.account_id }}.txt"
+          ls -la "$GITHUB_WORKSPACE"
