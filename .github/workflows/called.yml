@@ -4,9 +4,8 @@ on:
   workflow_call:
     inputs:
       account_id:
-        required: false
+        required: true
         type: string
-        default: "123456789012"
 
 jobs:
   test:
@@ -16,3 +15,10 @@ jobs:
         run: |
           echo "Reusable workflow called for account: ${{ inputs.account_id }}"
           echo "This is a test only; no AWS resources are accessed."
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: display the files
+        run: |
+          ls -la
